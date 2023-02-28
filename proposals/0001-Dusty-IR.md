@@ -1,6 +1,6 @@
-# IR
+# DustyLIR
 
-Dusty IR is a subset of Dusty.
+Dusty Lower IR is a subset of Dusty.
 
 ## Syntax
 
