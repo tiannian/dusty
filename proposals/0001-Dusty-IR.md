@@ -67,7 +67,7 @@ eq_u8(a, 1) {}
 ;lt(a, 8); {}
 ```
 
-###Mo# Return
+### Return
 
 ```
 <= 1
@@ -79,15 +79,19 @@ eq_u8(a, 1) {}
 <- 3
 ```
 
-
-
-
 ### Module
 
-```
+#### Declare
 
 ```
+string {}
+```
 
+#### Import
+
+```
+=> core::abc::{c, d};
+```
 
 
 
