@@ -1,0 +1,17 @@
+// Basic Type
+
+bool { _: inline_c! { bool } };
+
+u8 { _: inline_c! { uint8_t } };
+u16 { _: inline_c! { uint16_t } };
+u32 { _: inline_c! { uint32_t } };
+u64 { _: inline_c! { uint64_t } };
+
+i8 { _: inline_c! { int8_t } };
+i16 { _: inline_c! { int16_t } };
+i32 { _: inline_c! { int32_t } };
+i64 { _: inline_c! { int64_t } };
+
+usize { _: inline_c! { size_t } };
+isize { _: inline_c! { ptrdiff_t } };
+
