@@ -22,8 +22,12 @@ pub use types::*;
 mod flow;
 pub use flow::*;
 
+mod import;
+pub use import::*;
+
 pub enum Item {
     NewType(NewTypeDefine),
     Function(FunctionDefine),
+    Import(ImportPath),
     Empty,
 }
