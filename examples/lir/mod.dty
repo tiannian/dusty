@@ -1,0 +1,17 @@
+test_statement() -> {
+    a:= 2;
+
+    b: u8 = 3;
+
+    c:= &b;
+
+    c = 6
+}
+
+/* test_function() */
+/**/
+/* test_functioncall() -> { */
+/**/
+/*     } */
+/**/
+
