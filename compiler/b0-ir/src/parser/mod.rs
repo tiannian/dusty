@@ -78,7 +78,17 @@ impl Parser {
                     }
                 }
             },
-            _ => return Err(Error::WrongState),
+            State::FunctionOrNewType => {
+                if c.is_alphanumeric() {
+                    buff.push(c)
+                } else if c == '{' {
+                    // NewType
+                } else if c == '(' {
+                    // function
+                } else {
+                    return Err(Error::unexpect_token(c, "alphanumeric, { or ("));
+                }
+            }
         }
 
         Ok(Item::Empty)
