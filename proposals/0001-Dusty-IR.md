@@ -2,6 +2,8 @@
 
 Dusty Lower IR is a subset of Dusty.
 
+It can direct convert to compile target (C-lite, yul or other assembly).
+
 ## Syntax
 
 ### Statement
@@ -9,99 +11,122 @@ Dusty Lower IR is a subset of Dusty.
 #### Bound / Move
 
 ```go
-a := 2
+a: u8 = 2;
 
-a: u8 = 2
-
-b := $a
-
-b := &a
-
-b = 1
+a = 1;
 ```
 
-#### FunctionCall
+DustyIR don't must declare type.
 
+#### Semicolon
+
+Each expression can use semicolon to convert into statement.
+
+### Expression
+
+Each expression have a return value, can use in Bound or Move statement right value.
+
+#### Bound
+
+Bound in right value, mean this bound has moved.
+
+#### Literal
+
+- Number: `[1-9][0-9,.]+`
+- Integer
+  - Dec: `[1-9][0-9,]+`
+  - Hex: `0x[0-9a-fA-F,]+`
+- Character: `.|\\r|\\t|\\n`
+- String: `([^"\r\n\\] | '\\' .)*`
+
+#### Function Calll
+
+Call function
+
+```rust
+functioncall(1, 2, 3)
 ```
-b := function1(a)
-```
 
-### NewTypeStruct
+#### Inital list and Flow control
 
-#### Define
+refer to.
 
-```
-Simple { _: u8 }
-```
+#### Block
 
-#### Initialization
+Block is made up by Statement. The value of block is the latest expression or break operation.
 
-```
-simple: Simple = { _: u8 }
-```
+Lasest expression as VALUE
 
-### Function
-
-```
-add_u8(a: u8, b: u8) -> u8 {
-  inline_c! { a + b }
+```rust
+{
+  // Statements ...
+  1
 }
 ```
 
-### Array
+Break operation as VALUE
+
+```rust
+{
+  // Statements ...
+  <- 1;
+  // Other statements ...
+}
+```
+
+### Types
+
+#### Type with default field
+
+Definition:
 
 ```
-a := [0; 9]
+NewTypeU8 { _: u8 }
+```
+
+DustyIR only support `_` as default field.
+
+Initialization:
+
+```
+value: NewTypeU8 = {
+  _: u8
+};
+```
+
+#### Array
+
+Same value initialize:
+
+```rust
+array: [u8; 32] = [0; 32];
+```
+
+Element initialize:
+
+```rust
+array: [u8; 3] = [1, 2, 3];
 ```
 
 ### Flow Control
 
-#### If
+#### Match
 
 ```
-eq_u8(a, 1) {} {}
+a :u8 = 1;
 
-a {
-  1: {}
-  _: {}
-}
-
+a => { /* 1 */ }
+  => { /* 2 */ }
+  => 3 { /* 3 */ }
+  => 4 | 5 { /* 4 or 5*/ }
+  => _ { /* other value of u8 */ }
 ```
 
 #### Loop
 
 ```
-;; {}
-;lt(a, 8); {}
+(a: u8 = 0; isequal(&a, 7); incr($a)) {}
 ```
 
-### Return
-
-```
-<= 1
-```
-
-#### Break
-
-```
-<- 3
-```
-
-### Module
-
-#### Declare
-
-```
-string {}
-```
-
-#### Import
-
-```
-=> core::abc::{c, d};
-```
-
-
-
-
+The first field is Bound; Second must be true.
 
