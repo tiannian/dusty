@@ -12,9 +12,9 @@ You can compile DustyLang into many platform or used as script.
 - Compile into LLVM IR (LLVM toolchain)
 - Run in interpreter without compile
 
-## bootstrap
+## Bootstrap
 
-### bootstrap 0
+### Bootstrap 0
 
 Only support DustyLIR: Direct `convert` to backend.
 
@@ -30,7 +30,7 @@ Only support DustyLIR: Direct `convert` to backend.
 - Binding
 - Const and Default Field
 
-### bootstrap 1
+### Bootstrap 1
 
 - Class
 - Array
