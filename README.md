@@ -18,12 +18,33 @@ You can compile DustyLang into many platform or used as script.
 
 Only support DustyLIR: Direct `convert` to backend.
 
-- Yul
+- Yul (Smart Contract)
 - C-lite
+- WebAssembly
+- LLVM IR
 
-Using rust to write this compiler.
+#### Functions
+
+- Literal
+- Flow Control
+- Binding
+- Const and Default Field
 
 ### bootstrap 1
 
-Rewrite b0-ir by DustyLIR
+- Class
+- Array
+
+### Bootstrap 2
+
+- Borrow
+- RAII
+
+### Bootstrap 3 
+
+- Lifetime
+
+### Bootstrap 4
+
+- Generic
 

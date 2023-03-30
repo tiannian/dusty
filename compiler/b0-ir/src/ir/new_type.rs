@@ -20,6 +20,6 @@ pub enum NewTypeDefineType {
 }
 
 pub struct NewTypeDefine {
-    pub name: Ident,
-    pub ty: NewTypeDefineType,
+    pub name: Option<Ident>,
+    pub ty: Option<NewTypeDefineType>,
 }

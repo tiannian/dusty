@@ -1,6 +1,6 @@
 use crate::{
     error::{Error, Result},
-    ir::{Ident, ImportPath, Item},
+    ir::{Ident, ImportPath, Item, NewTypeDefineType, Types},
 };
 
 pub enum Command {}
@@ -11,6 +11,7 @@ pub enum State {
     FunctionOrNewType,
     MaybeImport,
     Import(ImportState),
+    NewType(Ident),
 }
 
 #[derive(Debug, PartialEq, Eq)]
@@ -37,13 +38,13 @@ impl Parser {
             State::Begin => {
                 buff.clear();
 
-                if c.is_alphanumeric() {
+                if c.is_alphanumeric() || c == '_' {
                     *s = State::FunctionOrNewType;
                     buff.push(c)
                 } else if c == '=' {
                     *s = State::MaybeImport;
                 } else {
-                    return Err(Error::unexpect_token(c, "alphanumeric or ="));
+                    return Err(Error::unexpect_token(c, "idnet or ="));
                 }
             }
             State::MaybeImport => {
@@ -56,11 +57,11 @@ impl Parser {
             }
             State::Import(ss) => match ss {
                 ImportState::Begin => {
-                    if c.is_alphanumeric() || c == ':' {
+                    if c.is_alphanumeric() || c == ':' || c == '_' {
                         buff.push(c);
                         *ss = ImportState::Path;
                     } else {
-                        return Err(Error::unexpect_token(c, "alphanumeric or ="));
+                        return Err(Error::unexpect_token(c, "ident or ="));
                     }
                 }
                 ImportState::Path => {
@@ -78,15 +79,26 @@ impl Parser {
                     }
                 }
             },
+
             State::FunctionOrNewType => {
-                if c.is_alphanumeric() {
+                if c.is_alphanumeric() || c == '_' {
                     buff.push(c)
                 } else if c == '{' {
-                    // NewType
+                    *s = State::NewType(Ident::new(&buff)?);
                 } else if c == '(' {
                     // function
                 } else {
-                    return Err(Error::unexpect_token(c, "alphanumeric, { or ("));
+                    return Err(Error::unexpect_token(c, "ident, { or ("));
+                }
+            }
+            State::NewType(ident) => {
+                let patten = "_:!&$()";
+                if c.is_alphanumeric() || patten.contains(c) {
+                    buff.push(c);
+                } else if c == '}' {
+                    // End new type
+                } else {
+                    return Err(Error::unexpect_token(c, "ident , or }"));
                 }
             }
         }
@@ -94,3 +106,36 @@ impl Parser {
         Ok(Item::Empty)
     }
 }
+
+// fn build_new_type_t(s: &str) -> Result<NewTypeDefineType> {
+//     #[derive(Debug, PartialEq, Eq)]
+//     enum State {
+//         Begin,
+//         Macro,
+//         RefMut,
+//         Ref,
+//     }
+//
+//     let mut buff = String::new();
+//     let mut state = State::Begin;
+//
+//     for c in s.chars() {
+//         if c.is_whitespace() {
+//             continue;
+//         }
+//
+//         if state == State::Begin && (c.is_alphanumeric() || c == '_') {
+//             buff.push(c);
+//         } else if c == '!' {
+//             state = State::Macro;
+//         } else if c == '$' {
+//             state = State::RefMut;
+//         } else if c == '&' {
+//             state = State::Ref;
+//         } else {
+//             return Err(Error::unexpect_token(c, ""));
+//         }
+//     }
+//
+//     Ok(())
+// }
