@@ -1,6 +1,6 @@
 # DustyLang
 
-Dustylang is a self bootstraped, powerful, widely, safety and high speed program language.
+Dustylang is a self bootstrap, powerful, widely, safety and high speed program language.
 
 ## Modes
 
