@@ -29,11 +29,13 @@ Only support DustyLIR: Direct `convert` to backend.
 - Flow Control
 - Binding
 - Const and Default Field
+- Array
 
 ### Bootstrap 1
 
 - Class
-- Array
+- Enum
+- Module
 
 ### Bootstrap 2
 
