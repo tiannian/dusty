@@ -130,3 +130,26 @@ a => { /* 1 */ }
 
 The first field is Bound; Second must be true.
 
+### Function
+
+Definition:
+
+```
+// Without return value
+function1(a: u8) {}
+
+// With return value
+function2(a: u8) u8 {
+  <= 1;
+}
+
+// With return value
+function3(a: u8) u8 {
+  1
+}
+```
+
+### File Level
+
+#### Import
+
