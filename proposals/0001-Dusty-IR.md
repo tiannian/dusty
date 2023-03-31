@@ -151,5 +151,19 @@ function3(a: u8) u8 {
 
 ### File Level
 
+Only have this syntax elements:
+
+- function definition
+- class definition
+- bound as const value
+- import
+
 #### Import
+
+```
+=> mapping::path1::path2;
+
+=> mapping::{path1, path2};
+```
+
 
