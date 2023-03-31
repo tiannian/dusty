@@ -86,12 +86,12 @@ NewTypeU8 { _: u8 }
 
 DustyIR only support `_` as default field.
 
+This means alias for types.
+
 Initialization:
 
 ```
-value: NewTypeU8 = {
-  _: u8
-};
+value: NewTypeU8 = 1;
 ```
 
 #### Array
