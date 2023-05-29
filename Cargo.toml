@@ -1,5 +1,5 @@
 [workspace]
 members = [
-    "compiler/b0-ir"
+    "compiler/b0"
 ]
 
