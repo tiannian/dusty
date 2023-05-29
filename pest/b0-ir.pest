@@ -50,3 +50,7 @@ function_define_header = { ident ~ "(" ~ function_define_arg* ~ ")" }
 function_define = { function_define_header ~ block }
 
 // Structions
+enum_field = { ident }
+struct_field = { (ident ~ ":" ~ type) | enum_field }
+struct_inner = { struct_field ~ ("," ~ struct_field)* ~ ","? }
+struct = { ident ~ "{" ~ struct_inner? ~ "}" }
