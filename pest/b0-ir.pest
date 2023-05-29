@@ -1,0 +1,52 @@
+WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+
+// ident
+ident_first = _{ LETTER | "_" }
+ident_inner = _{ LETTER | NUMBER | "_" }
+ident       =  { ident_first ~ ident_inner* }
+
+// literal
+literal_inner_char = _{ !"\"" ~ ("\\\"" | ANY) }
+literal_inner      =  { literal_inner_char* }
+literal = { ident ~ "\"" ~ literal_inner ~ "\"" }
+
+// expression
+expression = { literal | loop | match | function_call | ident }
+
+// type
+reference_label = { ("$" | "&")? }
+type = { reference_label ~ ident }
+
+// Function call
+function_call_arg = _{ expression ~ "," }
+function_call_args = { function_call_arg* ~ expression }
+function_call = { ident ~ "(" ~ function_call_args? ~ ")" }
+
+// Statement and block
+statement_end = { ";" }
+statement = { expression_statement | bound_statement | move_statement }
+expression_statement = { expression ~ statement_end }
+bound = _{ ident ~ ":" ~ type ~ "=" ~ expression }
+bound_statement = { bound ~ ";" }
+move_statement = { ident ~ "=" ~ expression ~ ";" }
+block = { "{" ~ (statement* ~ expression?)? ~ "}" }
+
+// loop
+loop = { "(" ~ bound? ~ ";" ~ expression? ~ ";" ~ expression? ~ ")" ~ block }
+
+// Match
+match_value = { literal ~ ("|" ~ literal)* }
+match_branch = _{ "=>" ~ match_value ~ block }
+match = { ident ~ match_branch ~ match_branch* }
+
+// Macro call
+macro_call_arg_letter = _{ !"`" ~ ANY }
+macro_call_arg = { "`" ~ macro_call_arg_letter+ ~ "`" }
+macro_call = { "@" ~ ident ~ "(" ~ macro_call_arg? ~ ")" }
+
+// Function Define
+function_define_arg = { ident ~ ":" ~ type }
+function_define_header = { ident ~ "(" ~ function_define_arg* ~ ")" }
+function_define = { function_define_header ~ block }
+
+// Structions
