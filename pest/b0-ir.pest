@@ -54,3 +54,7 @@ enum_field = { ident }
 struct_field = { (ident ~ ":" ~ type) | enum_field }
 struct_inner = { struct_field ~ ("," ~ struct_field)* ~ ","? }
 struct = { ident ~ "{" ~ struct_inner? ~ "}" }
+
+// File
+file_item = { struct | function_define | statement }
+file = { file_item* }
