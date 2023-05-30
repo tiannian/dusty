@@ -1,4 +1,8 @@
 WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+COMMENT = _{ comment_multi_line | comment_single_line }
+
+comment_multi_line = _{ "/*" ~ (!"*/" ~ ANY)* ~ "*/" }
+comment_single_line = _{ "//" ~ (!"\n" ~ ANY)* }
 
 // ident
 ident_first = _{ LETTER | "_" }
@@ -11,7 +15,7 @@ literal_inner      =  { literal_inner_char* }
 literal = { ident ~ "\"" ~ literal_inner ~ "\"" }
 
 // expression
-expression = { literal | loop | match | function_call | ident }
+expression = { literal | loop | match | function_call | macro_call | ident }
 
 // type
 reference_label = { ("$" | "&")? }
@@ -51,7 +55,7 @@ function_define = { function_define_header ~ block }
 
 // Structions
 enum_field = { ident }
-struct_field = { (ident ~ ":" ~ type) | enum_field }
+struct_field = { (ident ~ ":" ~ type) | (ident ~ ":" ~ macro_call) | enum_field }
 struct_inner = { struct_field ~ ("," ~ struct_field)* ~ ","? }
 struct = { ident ~ "{" ~ struct_inner? ~ "}" }
 
