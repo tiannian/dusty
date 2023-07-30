@@ -1,0 +1,11 @@
+@import ::error::{ Error, Result };
+
+From<T> {
+    from(t: T) From;
+}
+
+TryFrom<T> {
+    Error = ?: Error;
+
+    try_from(t: T) -> Result<T, TryFrom::Error>;
+}

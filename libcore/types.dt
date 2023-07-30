@@ -1,0 +1,41 @@
+// Basic Type
+
+bool {
+    true;
+
+    false;
+
+    [x&&y](x: &bool, y: &bool) bool {
+        (x, y) => (bool::true, bool::true) {
+            bool::true
+        } => {
+            bool::false
+        }
+    }
+
+    [x||y](x: &bool, y: &bool) bool {
+        (x, y) => (bool::false, bool::false) {
+            bool::false
+        } => {
+            bool::true
+        }
+    }
+
+    [!x](x: bool) bool {
+        x => {
+            bool::false
+        } => {
+            bool::true
+        }
+    }
+}
+
+bool: PartialEq {
+}
+
+u8 {
+    NTTUint8 = cii::ntt! { uint8_t };
+
+    value: NTTUint8;
+}
+

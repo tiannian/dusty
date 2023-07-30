@@ -1,0 +1,34 @@
+@import ::types::str;
+
+Error {
+    name() &str;
+}
+
+Error: From<Error> {
+    from(t: Error) Error {
+        t
+    }
+}
+
+Result<T, E> {
+    Ok { t: T }
+    Err { e: E }
+}
+
+ok<T, E>(t: T) Result<T, E> {
+    Result::Ok { t }
+}
+
+err<T, E>(e: E) Result<T, E> {
+    Result::Err { e }
+}
+
+Result<T, E: Error> {
+    [r?](r: Result) E {
+        r => Result::Ok { t } {
+            <- t;
+        } => Result::Err { e } {
+            <= e;
+        }
+    }
+}

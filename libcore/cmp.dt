@@ -1,0 +1,88 @@
+@import ::types::bool;
+
+CmpOrder {
+    Equal;
+    Greater;
+    Less;
+
+    is_equal(self: &CmpOrder) bool {
+        self => CmpOrder::Equal {
+            bool::true
+        } => {
+            bool::false
+        }
+    }
+
+    is_greater(self: &CmpOrder) bool {
+        self => CmpOrder::Greater {
+            bool::true
+        } => {
+            bool::false
+        }
+    }
+
+    is_less(self: &CmpOrder) bool {
+        self => CmpOrder::Less {
+            bool::true
+        } => {
+            bool::false
+        }
+    }
+}
+
+Cmp<R = Cmp> {
+    cmp(self: &Cmp, y: &R) CmpOrder;
+
+    eq(self: &Cmp, y: &R) bool { 
+        self.cmp(y).is_equal()
+    }
+
+    ne(self: &Cmp, y: &R) bool {
+        !self.eq()
+    }
+
+    /// Less than
+    lt(self: &Cmp, y: &R) bool {
+        self.cmp(y).is_less()
+    }
+
+    /// Less equal
+    le(self: &Cmp, y: &R) bool {
+        !self.gt(y)
+    }
+
+    /// Greater than
+    gt(self: &Cmp, y: &R) bool {
+        self.cmp(y).is_greater()
+    }
+
+    /// Greater equal
+    ge(self: &Cmp, y: &R) bool {
+        !self.lt(y)
+    }
+
+    [x==y](x: &Cmp, y: &R) bool {
+        x.eq(y)
+    }
+
+    [x!=y](x: &Cmp, y: &R) bool {
+        x.ne(y)
+    }
+
+    [x<y](x: &cmp, y: &R) bool {
+        x.lt(y)
+    }
+
+    [x<=y](x: &cmp, y: &R) bool {
+        x.le(y)
+    }
+
+    [x>y](x: &cmp, y: &R) bool {
+        x.gt(y)
+    }
+
+    [x>=y](x: &cmp, y: &R) bool {
+        x.ge(y)
+    }
+}
+
