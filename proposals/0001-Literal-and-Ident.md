@@ -6,8 +6,8 @@ In DustLang, identifiers must meet the following requirements:
 
 - Identifiers cannot contain ASCII symbols.
 - The first character of an identifier cannot be an ASCII digit.
-- The first character of an identifier can be an underscore \_.
-- Identifiers can contain underscores \_.
+- The first character of an identifier can be an underscore `_`.
+- Identifiers can contain underscores `_`.
 - Identifiers cannot contain Unicode whitespace characters.
 - Apart from the above restrictions, identifiers can use any Unicode characters.
 
