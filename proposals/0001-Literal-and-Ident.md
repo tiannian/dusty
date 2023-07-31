@@ -1,4 +1,4 @@
-# Identifiers, Encoding, and Constants
+# Identifiers, Encoding, and Literals
 
 ## Identifiers
 
